@@ -12,9 +12,9 @@ class Post(Base):
   user_id = Column(Integer, ForeignKey('users.id'))
   created_at = Column(DateTime, default=datetime.now)
   updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-  vote_count = column_property(
-    select([func.count(Vote.id)]).where(Vote.post_id == id)
-  )
+  # vote_count = column_property(
+  #   select([func.count(Vote.id)]).where(Vote.post_id == id)
+  # )
 
   user = relationship('User')
   comments = relationship('Comment', cascade='all,delete')
