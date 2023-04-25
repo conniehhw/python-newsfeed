@@ -17,9 +17,11 @@ class Post(Base):
     comments = relationship('Comment', cascade='all,delete')
     votes = relationship('Vote', cascade='all,delete')
   
-    # vote_count = column_property(
-    #     select([func.count(Vote.id)]).where(Vote.post_id == id)
-    # )
+    vote_count = column_property(
+    select(func.count(Vote.id)).where(Vote.post_id == id).correlate_except(Vote).scalar_subquery()
+    )
+
+#   select([func.count(Vote.id)]).where(Vote.post_id == id) 
 
 #   # this model has two defined relationships: one for users and one for comments. Querying for a post returns both data subsets. Because the model for comments also defines a relationship, 
 #   # querying for a post returns the comment-to-user subset as well.
